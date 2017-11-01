@@ -1,0 +1,1 @@
+binding silence 2006
