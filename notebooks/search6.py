@@ -3,7 +3,7 @@ import os
 from functools import partial
 
 
-def flatten(l): 
+def flatten(l):
     return [item for sublist in l for item in sublist]
 
 def chunks(l, n):
@@ -28,23 +28,23 @@ def search6(q, path):
     cpu_count = multiprocessing.cpu_count()
     paths = list(map(lambda x: x.path, list(os.scandir(path))))
     group_size = int(len(paths) / cpu_count)
-   
+
 
     for i, paths in enumerate(chunks(paths, group_size)):
         p = multiprocessing.Process(target=find, args=(q, paths, l))
         p.daemon = True
-        p.start()    
+        p.start()
         workers.append(p)
 
     for p in workers:
         p.join()
 
     matches = flatten(l)
-        
+
     matches.sort()
     return matches
-    
-if __name__ == '__main__': 
-    r = search6('walt disney', 'data') 
+
+if __name__ == '__main__':
+    r = search6('walt disney', 'data')
     print(r)
     print(len(r))

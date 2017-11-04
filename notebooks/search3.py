@@ -3,7 +3,7 @@ import os
 from functools import partial
 
 
-def flatten(l): 
+def flatten(l):
     return [item for sublist in l for item in sublist]
 
 def chunks(l, n):
@@ -20,7 +20,7 @@ def contains(q, path):
 def find(q, paths):
     return filter(partial(contains, q), paths)
 
-def search3(q, path):    
+def search3(q, path):
     cpu_count = multiprocessing.cpu_count()
     paths = list(map(lambda x: x.path, list(os.scandir(path))))
     group_size = int(len(paths) / cpu_count)
@@ -31,8 +31,8 @@ def search3(q, path):
 
     matches.sort()
     return matches
-    
-if __name__ == '__main__': 
-    r = search3('walt disney', 'data') 
+
+if __name__ == '__main__':
+    r = search3('walt disney', 'data')
     print(r)
     print(len(r))

@@ -32,10 +32,10 @@ def search2(q, path):
 
     queue.join()
     results.sort()
-    
+
     return results
 
 if __name__ == '__main__':
-    r = search2('walt disney', 'data') 
+    r = search2('walt disney', 'data')
     print(r)
     print(len(r))

@@ -15,6 +15,6 @@ def search1(q, path):
     return r
 
 if __name__ == '__main__':
-    r = search1('walt disney', 'data') 
+    r = search1('walt disney', 'data')
     print(r)
     print(len(r))

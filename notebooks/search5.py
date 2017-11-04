@@ -4,7 +4,7 @@ import tempfile
 from functools import partial
 
 
-def flatten(l): 
+def flatten(l):
     return [item for sublist in l for item in sublist]
 
 def chunks(l, n):
@@ -39,7 +39,7 @@ def search5(q, path):
 
         p = multiprocessing.Process(target=find, args=(q, paths, tem_path))
         p.daemon = True
-        p.start()    
+        p.start()
         workers.append(p)
 
     for p in workers:
@@ -54,13 +54,13 @@ def search5(q, path):
 
         with(open(r)) as f:
             matches = matches + f.readlines()
-        
+
         results.pop(0)
-        
+
     matches.sort()
     return matches
-    
-if __name__ == '__main__': 
-    r = search5('walt disney', 'data') 
+
+if __name__ == '__main__':
+    r = search5('walt disney', 'data')
     print(r)
     print(len(r))

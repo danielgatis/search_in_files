@@ -11,22 +11,22 @@ def contains(q, path):
 
 
 def work(id, q, jobs, array):
-    while True:        
+    while True:
         job = jobs.get()
-        
+
         if job is None:
             break
-        
+
         idx, path = job
 
         if contains(q, path):
             array[idx] = 1
-        
+
 
 def search9(q, path):
     jobs = Queue()
     NUMBER_OF_PROCESSES = cpu_count()
-    
+
     paths = []
     job_count = 0
     for idx, f in enumerate(os.scandir('data')):
@@ -40,9 +40,9 @@ def search9(q, path):
     for i in range(NUMBER_OF_PROCESSES):
         w = Process(target=work, args=(i, q, jobs, array))
         w.daemon = True
-        w.start()    
+        w.start()
         workers.append(w)
-      
+
     for w in range(NUMBER_OF_PROCESSES):
         jobs.put(None)
 
@@ -51,12 +51,12 @@ def search9(q, path):
 
     matches = [paths[i] for i, match in enumerate(array) if match]
     matches.sort()
- 
+
     jobs.close()
-    
+
     return matches
 
-if __name__ == '__main__': 
-    r = search9('walt disney', 'data') 
+if __name__ == '__main__':
+    r = search9('walt disney', 'data')
     print(r)
     print(len(r))
