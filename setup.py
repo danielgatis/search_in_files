@@ -27,7 +27,7 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
-    keywords='search find file',
+    keywords='python file-search text-search fast',
     setup_requires=['cython'],
     install_requires=['six'],
     packages = find_packages(exclude=['notebooks']),
