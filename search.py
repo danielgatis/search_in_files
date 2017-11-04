@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+cimport cython
 from multiprocessing import Array, Process, Queue, cpu_count
 from os.path import abspath, exists, isdir, join
 from sys import argv, exit
