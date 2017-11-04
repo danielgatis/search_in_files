@@ -5,10 +5,13 @@ def find_in_file(pattern, path, open_file=open):
     """
         Returns True when the file contains the pattern otherwise returns False
     """
-    with open_file(path, encoding='utf-8') as f:
-        for line in f:
-            if line.find(pattern) > -1:
-                return True
+    try:
+        with open_file(path, encoding='utf-8') as f:
+            for line in f:
+                if line.find(pattern) > -1:
+                    return True
+    except:
+        pass
 
     return False
 
