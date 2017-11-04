@@ -1,5 +1,5 @@
 import os
-from multiprocessing import Process, Queue, Array, cpu_count
+from multiprocessing import Array, Process, Queue, cpu_count
 
 
 def contains(q, path):

@@ -1,7 +1,7 @@
-import multiprocessing 
+import multiprocessing
+import os
 import tempfile
 from functools import partial
-import os
 
 
 def flatten(l): 

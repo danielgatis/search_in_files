@@ -1,5 +1,6 @@
-from functools import partial
 import os
+from functools import partial
+
 
 def contains(q, path):
     with(open(path)) as f:

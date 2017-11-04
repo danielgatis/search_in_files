@@ -1,5 +1,5 @@
-import threading
 import os
+import threading
 from queue import Queue
 
 queue = Queue()
