@@ -7,7 +7,6 @@ from os.path import join
 from threading import Thread
 
 import six
-
 from search_in_files.search import (create_tasks, create_workers, find_in_file,
                                     get_task_queue, get_worker_klass, search,
                                     timing, wait_for_workers, work)

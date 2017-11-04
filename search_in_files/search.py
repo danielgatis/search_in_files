@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from multiprocessing import Array, Process, Queue, cpu_count
-from os.path import join, abspath, exists, isdir
+from os.path import abspath, exists, isdir, join
+from sys import argv, exit
 from threading import Thread
 from time import time
-from sys import argv, exit
 
 import six
-
 from search_in_files.csearch import find_in_file, sort
 
 if six.PY3:
