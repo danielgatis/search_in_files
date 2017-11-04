@@ -8,8 +8,9 @@ from threading import Thread
 
 import six
 
-from search import (create_tasks, create_workers, find_in_file, get_task_queue,
-                    get_worker_klass, search, timing, wait_for_workers, work)
+from search_in_files.search import (create_tasks, create_workers, find_in_file,
+                                    get_task_queue, get_worker_klass, search,
+                                    timing, wait_for_workers, work)
 
 if six.PY3:
     from queue import Queue as ThreadQueue
@@ -70,12 +71,13 @@ class SearchTest(unittest.TestCase):
         ]
 
         queue = MockedQueue()
+        get_path = lambda folder, f: f.path
 
         tasks = create_tasks(
             folder,
             queue,
             scandir=mocked_scandir(paths),
-            six=mocked_six_py3(True)
+            get_path=get_path
         )
 
         self.assertTrue(len(tasks) == len(paths))
@@ -91,12 +93,13 @@ class SearchTest(unittest.TestCase):
         ]
 
         queue = MockedQueue()
+        get_path = lambda folder, f: join(folder, str(f))
 
         tasks = create_tasks(
             'folder',
             queue,
             scandir=mocked_scandir(paths),
-            six=mocked_six_py3(False)
+            get_path=get_path
         )
 
         full_paths = [(p[0], join(folder, p[1])) for p in enumerate(paths)]
@@ -173,7 +176,7 @@ class SearchTest(unittest.TestCase):
 
 
 class mocked_open:
-    def __init__(self, path):
+    def __init__(self, *args):
         pass
 
     def __exit__(self, *args):
@@ -232,14 +235,6 @@ def mocked_scandir(paths):
             yield F(_paths.pop(0))
 
     return G
-
-
-def mocked_six_py3(is_py3):
-    class S:
-        def __init__(self):
-            self.PY3 = is_py3
-
-    return S()
 
 
 if __name__ == '__main__':

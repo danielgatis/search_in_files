@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-cimport cython
 from multiprocessing import Array, Process, Queue, cpu_count
-from os.path import abspath, exists, isdir, join
-from sys import argv, exit
+from os.path import join, abspath, exists, isdir
 from threading import Thread
 from time import time
+from sys import argv, exit
 
 import six
+
+from search_in_files.csearch import find_in_file, sort
 
 if six.PY3:
     from os import scandir
@@ -22,9 +23,9 @@ else:
 
 
 if six.PY3:
-    get_path = lambda f: f.path
+    get_path = lambda folder, f: f.path
 else:
-    get_path = lambda f: join(folder, str(f))
+    get_path = lambda folder, f: join(folder, str(f))
 
 
 def timing(f, time=time):
@@ -38,21 +39,6 @@ def timing(f, time=time):
         took = (time2 - time1) * 1000
         return ret, took
     return wrap
-
-
-def find_in_file(pattern, path, open_file=open):
-    """
-        Returns True when the file contains the pattern otherwise returns False
-    """
-    try:
-        with open_file(path, 'r') as f:
-            for line in f:
-                if line.find(pattern) > -1:
-                    return True
-    except:
-        pass
-
-    return False
 
 
 def work(pattern, task_queue, results, get_result=find_in_file):
@@ -69,14 +55,14 @@ def work(pattern, task_queue, results, get_result=find_in_file):
         results[idx] = int(get_result(pattern, path))
 
 
-def create_tasks(folder, task_queue, scandir=scandir):
+def create_tasks(folder, task_queue, scandir=scandir, get_path=get_path):
     """
         Creates one task for each file on a folder
     """
     tasks = []
 
     for idx, f in enumerate(scandir(folder)):
-        path = get_path(f)
+        path = get_path(folder, f)
         task = (idx, path)
         tasks.append(task)
         task_queue.put(task)
@@ -171,18 +157,15 @@ def search(
     wait_for_workers(workers, task_queue)
 
     # gets the paths and sorts alphabetically
-    matches = [tasks[i][1] for i, match in enumerate(results) if match]
-    matches.sort()
-
-    return matches
+    return sort(tasks, results)
 
 
-if __name__ == '__main__':
+def main():
     if (len(argv) < 3):
-        print('Usage: python search.py <pattern> <directory>')
+        print('Usage: search_in_files <pattern> <directory>')
         print('')
         print('Example:')
-        print('\tpython search.py "walt disney" ./data')
+        print('\tsearch_in_files "walt disney" ./data')
         exit(0)
 
     pattern = argv[1]
@@ -207,3 +190,7 @@ if __name__ == '__main__':
     else:
         print('Não foram encontrada ocorrências pelo termo "{}" ({:0.3f} ms)'
               .format(pattern, took))
+
+
+if __name__ == '__main__':
+    main()
