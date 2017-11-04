@@ -1,9 +1,10 @@
 search_in_files
 ===============
 
-This is a tool for searching text files.
+This is a tool for searching text in files.
 
 - It is smart enough to run in parallel on multi-core computers and run mode on single-core computers
+- Handle utf-8 text files
 - Handle big files as well
 - It is fast ;)
 

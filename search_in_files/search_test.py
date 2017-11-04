@@ -176,7 +176,7 @@ class SearchTest(unittest.TestCase):
 
 
 class mocked_open:
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         pass
 
     def __exit__(self, *args):
