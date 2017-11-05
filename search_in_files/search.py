@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import argparse
 from multiprocessing import Array, Process, Queue, cpu_count
 from os.path import abspath, exists, isdir, join
-from sys import argv, exit
+from sys import exit, getdefaultencoding
 from threading import Thread
 from time import time
 
@@ -161,20 +162,38 @@ def search(
 
 
 def main():
-    if (len(argv) < 3):
-        print('Usage: search_in_files <pattern> <directory> <optional encoding>')
-        print('')
-        print('Example:')
-        print('\tsearch_in_files "walt disney" ./data UTF-8')
-        exit(0)
+    parser = argparse.ArgumentParser(
+        prog='search_in_files',
+        description='Search text in files'
+    )
 
-    pattern = argv[1]
-    folder = abspath(argv[2])
+    parser.add_argument(
+        'pattern',
+        type=str,
+        help='an pattern to search'
+    )
 
-    try:
-        encoding  = argv[3]
-    except IndexError:
-        encoding = None
+    parser.add_argument(
+        'folder',
+        type=str,
+        default='.',
+        nargs='?',
+        help='an folder path (default: .)'
+    )
+
+    parser.add_argument(
+        'encoding',
+        default=None,
+        type=str,
+        nargs='?',
+        help='the char encoding (default: {})'.format(getdefaultencoding())
+    )
+
+    args = parser.parse_args()
+
+    pattern = args.pattern
+    folder = abspath(args.folder)
+    encoding  = args.encoding
 
     if not exists(folder):
         print('This path does not exists: {}'.format(folder))
