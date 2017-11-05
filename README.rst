@@ -3,12 +3,18 @@ search_in_files
 
 This is a tool for search text in files.
 
-- It is smart enough to run in parallel on multi-core computers and run mode on single-core computers
+- It is smart enough to run in parallel on multi-core computers and run thread mode on single-core computers
 - Handles different types character encodings
 - Handles big files as well
 - It is fast ;)
+ 
+ 
 
-For more information see:
+.. figure:: https://github.com/danielgatis/search_in_files/blob/master/demo.gif?raw=true
+
+::
+
+For more information see here:
 https://github.com/danielgatis/search_in_files/blob/master/notebooks/search_in_files.ipynb
 
 How to install
