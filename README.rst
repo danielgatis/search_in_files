@@ -7,13 +7,14 @@ This is a tool for search text in files.
 - Handles different types character encodings
 - Handles big files as well
 - It is fast ;)
-
+ 
+ 
 
 .. figure:: https://github.com/danielgatis/search_in_files/blob/master/demo.gif?raw=true
-   :alt: demo
-   
 
-For more information see:
+::
+
+For more information see here:
 https://github.com/danielgatis/search_in_files/blob/master/notebooks/search_in_files.ipynb
 
 How to install
