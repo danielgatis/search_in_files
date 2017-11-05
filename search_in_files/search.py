@@ -40,7 +40,7 @@ def timing(f, time=time):
     return wrap
 
 
-def work(pattern, task_queue, results, get_result=find_in_file):
+def work(pattern, encoding, task_queue, results, get_result=find_in_file):
     """
         Consumes all the tasks
     """
@@ -51,7 +51,7 @@ def work(pattern, task_queue, results, get_result=find_in_file):
             break
 
         idx, path = args
-        results[idx] = int(get_result(pattern, path))
+        results[idx] = int(get_result(pattern, path, encoding))
 
 
 def create_tasks(folder, task_queue, scandir=scandir, get_path=get_path):
@@ -122,6 +122,7 @@ def get_task_queue(cpu_count):
 def search(
     pattern,
     folder,
+    encoding,
     get_task_queue=get_task_queue,
     get_worker_klass=get_worker_klass,
     array_klass=Array,
@@ -148,7 +149,7 @@ def search(
     # creates a bunch of workers
     workers = create_workers(
         get_cpu_count(),
-        (pattern, task_queue, results),
+        (pattern, encoding, task_queue, results),
         get_worker_klass(cpu_count)
     )
 
@@ -161,14 +162,19 @@ def search(
 
 def main():
     if (len(argv) < 3):
-        print('Usage: search_in_files <pattern> <directory>')
+        print('Usage: search_in_files <pattern> <directory> <optional encoding>')
         print('')
         print('Example:')
-        print('\tsearch_in_files "walt disney" ./data')
+        print('\tsearch_in_files "walt disney" ./data UTF-8')
         exit(0)
 
     pattern = argv[1]
     folder = abspath(argv[2])
+
+    try:
+        encoding  = argv[3]
+    except IndexError:
+        encoding = None
 
     if not exists(folder):
         print('O caminho {} não existe'.format(folder))
@@ -178,7 +184,7 @@ def main():
         print('O caminho {} não é um diretório'.format(folder))
         exit(0)
 
-    matches, took = timing(search)(pattern, folder)
+    matches, took = timing(search)(pattern, folder, encoding)
 
     for match in matches:
         print('{}'.format(match))

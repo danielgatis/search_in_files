@@ -29,34 +29,34 @@ class SearchTest(unittest.TestCase):
         self.assertTrue(r[1] == 1000)
 
     def test_find_in_file_when_true(self):
-        r = find_in_file('match', 'fake-path', open_file=mocked_open)
+        r = find_in_file('match', 'fake-path', 'utf-8', open_file=mocked_open)
         self.assertTrue(r)
 
     def test_find_in_file_when_false(self):
-        r = find_in_file('no-match', 'fake-path', open_file=mocked_open)
+        r = find_in_file('no-match', 'fake-path', 'utf-8', open_file=mocked_open)
         self.assertFalse(r)
 
     def test_work_get_result(self):
         items = [None, (0, True)]
-        f  = lambda x, y: True
+        f  = lambda x, y, z: True
         results = [0]
 
         queue = type('queue', (object,), {})
         queue.get = lambda: items.pop()
 
-        work('pattern', queue, results, get_result=f)
+        work('pattern', 'utf-8', queue, results, get_result=f)
 
         self.assertTrue(results[0])
 
     def test_work_killed(self):
         items = [(0, True), None]
-        f  = lambda x, y: True
+        f  = lambda x, y, z: True
         results = [0]
 
         queue = type('queue', (object,), {})
         queue.get = lambda: items.pop()
 
-        work('pattern', queue, results, get_result=f)
+        work('pattern', 'utf-8',queue, results, get_result=f)
 
         self.assertFalse(results[0])
 
@@ -161,6 +161,7 @@ class SearchTest(unittest.TestCase):
         matches = search(
             'pattern',
             'folder',
+            'utf-8',
             get_task_queue=get_task_queue,
             get_worker_klass=get_worker_klass,
             array_klass=array_klass,
