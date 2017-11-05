@@ -37,26 +37,22 @@ class SearchTest(unittest.TestCase):
         self.assertFalse(r)
 
     def test_work_get_result(self):
-        items = [None, (0, True)]
+        tasks = [None, (0, True)]
         f  = lambda x, y, z: True
         results = [0]
-
-        queue = type('queue', (object,), {})
-        queue.get = lambda x: items.pop()
+        queue = MockedQueue(tasks=tasks)
 
         work('pattern', 'utf-8', queue, results, get_result=f)
 
         self.assertTrue(results[0])
 
     def test_work_killed(self):
-        items = [(0, True), None]
+        tasks = [(0, True), None]
         f  = lambda x, y, z: True
         results = [0]
+        queue = MockedQueue(tasks=tasks)
 
-        queue = type('queue', (object,), {})
-        queue.get = lambda x: items.pop()
-
-        work('pattern', 'utf-8',queue, results, get_result=f)
+        work('pattern', 'utf-8', queue, results, get_result=f)
 
         self.assertFalse(results[0])
 
@@ -125,9 +121,6 @@ class SearchTest(unittest.TestCase):
         workers = [MockedWorker(), MockedWorker()]
         wait_for_workers(workers, queue)
 
-        for t in queue.tasks:
-            self.assertTrue(t == None)
-
         for w in workers:
             self.assertTrue(w.is_joined)
 
@@ -190,9 +183,12 @@ class mocked_open:
 
 
 class MockedQueue:
-    def __init__(self):
-        self.tasks = []
+    def __init__(self, tasks=[]):
+        self.tasks = tasks
         self.is_closed = False
+
+    def get(self):
+        return self.tasks.pop()
 
     def close(self):
         self.is_closed = True
