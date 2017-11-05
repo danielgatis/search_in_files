@@ -177,11 +177,11 @@ def main():
         encoding = None
 
     if not exists(folder):
-        print('O caminho {} não existe'.format(folder))
+        print('This path does not exists: {}'.format(folder))
         exit(0)
 
     if not isdir(folder):
-        print('O caminho {} não é um diretório'.format(folder))
+        print('This path is not a directory: {}'.format(folder))
         exit(0)
 
     matches, took = timing(search)(pattern, folder, encoding)
@@ -190,10 +190,10 @@ def main():
         print('{}'.format(match))
 
     if matches:
-        print('Foram encontrada {} ocorrência(s) pelo termo "{}" ({:0.3f} ms)'
+        print('There were {} occurrence(s) of the term "{}" ({:0.3f} ms)'
               .format(len(matches), pattern, took))
     else:
-        print('Não foram encontrada ocorrências pelo termo "{}" ({:0.3f} ms)'
+        print('No occurrences were found by term "{}" ({:0.3f} ms)'
               .format(pattern, took))
 
 
