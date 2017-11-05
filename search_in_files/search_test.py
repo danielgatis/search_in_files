@@ -42,7 +42,7 @@ class SearchTest(unittest.TestCase):
         results = [0]
 
         queue = type('queue', (object,), {})
-        queue.get = lambda: items.pop()
+        queue.get = lambda x: items.pop()
 
         work('pattern', 'utf-8', queue, results, get_result=f)
 
@@ -54,7 +54,7 @@ class SearchTest(unittest.TestCase):
         results = [0]
 
         queue = type('queue', (object,), {})
-        queue.get = lambda: items.pop()
+        queue.get = lambda x: items.pop()
 
         work('pattern', 'utf-8',queue, results, get_result=f)
 

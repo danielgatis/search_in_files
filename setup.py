@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='search_in_files',
-    version='0.0.1',
+    version='0.0.2',
     description='A tool for find text in files.',
     long_description=long_description,
     url='https://github.com/danielgatis/search_in_files',
