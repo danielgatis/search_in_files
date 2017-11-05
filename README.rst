@@ -9,10 +9,8 @@ This is a tool for search text in files.
 - It is fast ;)
 
 
-|asciicast|
-
-.. |asciicast| image:: https://asciinema.org/a/145986.png
-   :target: https://asciinema.org/a/145986
+.. figure:: https://github.com/danielgatis/search_in_files/blob/master/demo.gif?raw=true
+   :alt: demo
    
    
 For more information see:
