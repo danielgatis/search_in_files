@@ -4,7 +4,7 @@ search_in_files
 This is a tool for search text in files.
 
 - It is smart enough to run in parallel on multi-core computers and run thread mode on single-core computers
-- Handles different types character encodings
+- Handles different types of character encodings
 - Handles big files as well
 - It is fast ;)
  
